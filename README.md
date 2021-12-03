@@ -21,12 +21,17 @@ The repo contains 6 projects
 *****************************************************************************
 
 
-**Steps**: 
+* Steps: 
     1- Download/clone the repo
+    
     2- run EiffelCorp 
+
     3- run Ifshare
+    
     4- run EiffelCorpScenario
+    
     5-run IfClient on the server.
     
-**First URL:**  - http://localhost:8080/IfClient/productsList
+*  URL:   - http://localhost:8080/IfClient/productsList
+
 
