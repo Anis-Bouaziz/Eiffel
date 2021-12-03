@@ -1,0 +1,64 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from IfServiceService WSDL service -->
+
+  <service name="IfService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service"/>
+      <parameter name="wsdlServiceElement" value="IfServiceService"/>
+      <parameter name="schemaQualified" value="http://entity,http://service"/>
+      <parameter name="wsdlServicePort" value="IfService"/>
+      <parameter name="className" value="service.IfServiceSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="IfService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="convert" qname="operNS:convert" xmlns:operNS="http://service" returnQName="retNS:convertReturn" xmlns:retNS="http://service" returnType="rtns:ProductForUser" xmlns:rtns="http://entity" soapAction="" >
+        <parameter qname="pns:cTo" xmlns:pns="http://service" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getProducts" qname="operNS:getProducts" xmlns:operNS="http://service" returnQName="retNS:getProductsReturn" xmlns:retNS="http://service" returnType="rtns:ProductForUser" xmlns:rtns="http://entity" soapAction="" >
+      </operation>
+      <operation name="login" qname="operNS:login" xmlns:operNS="http://service" returnQName="retNS:loginReturn" xmlns:retNS="http://service" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="checkout" qname="operNS:checkout" xmlns:operNS="http://service" returnQName="retNS:checkoutReturn" xmlns:retNS="http://service" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:userID" xmlns:pns="http://service" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:IBAN" xmlns:pns="http://service" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:cvv2" xmlns:pns="http://service" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getCart" qname="operNS:getCart" xmlns:operNS="http://service" returnQName="retNS:getCartReturn" xmlns:retNS="http://service" returnType="rtns:ProductForUser" xmlns:rtns="http://entity" soapAction="" >
+        <parameter qname="pns:currency" xmlns:pns="http://service" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="addToCart" qname="operNS:addToCart" xmlns:operNS="http://service" returnQName="retNS:addToCartReturn" xmlns:retNS="http://service" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:productID" xmlns:pns="http://service" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="getTotal" qname="operNS:getTotal" xmlns:operNS="http://service" returnQName="retNS:getTotalReturn" xmlns:retNS="http://service" returnType="rtns:double" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="removeFromCart" qname="operNS:removeFromCart" xmlns:operNS="http://service" returnQName="retNS:removeFromCartReturn" xmlns:retNS="http://service" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:productID" xmlns:pns="http://service" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="removeFromCart addToCart getTotal convert getCart getProducts login checkout"/>
+
+      <typeMapping
+        xmlns:ns="http://entity"
+        qname="ns:ProductForUser"
+        type="java:entity.ProductForUser"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+      <arrayMapping
+        xmlns:ns="http://service"
+        qname="ns:ArrayOf_xsd_string"
+        type="java:java.lang.String[]"
+        innerType="cmp-ns:string" xmlns:cmp-ns="http://www.w3.org/2001/XMLSchema"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

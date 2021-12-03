@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://webService" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://webService" xmlns:intf="http://webService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://webService" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="performPurchace">
+    <complexType>
+     <sequence>
+      <element name="IBAN" type="xsd:long"/>
+      <element name="cvv2" type="xsd:int"/>
+      <element name="price" type="xsd:double"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="performPurchaceResponse">
+    <complexType>
+     <sequence>
+      <element name="performPurchaceReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="performPurchaceRequest">
+
+      <wsdl:part element="impl:performPurchace" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="performPurchaceResponse">
+
+      <wsdl:part element="impl:performPurchaceResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="BankWebServiceImpl">
+
+      <wsdl:operation name="performPurchace">
+
+         <wsdl:input message="impl:performPurchaceRequest" name="performPurchaceRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:performPurchaceResponse" name="performPurchaceResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="BankWebServiceImplSoapBinding" type="impl:BankWebServiceImpl">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="performPurchace">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="performPurchaceRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="performPurchaceResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="BankWebServiceImplService">
+
+      <wsdl:port binding="impl:BankWebServiceImplSoapBinding" name="BankWebServiceImpl">
+
+         <wsdlsoap:address location="http://localhost:8080/BankService/services/BankWebServiceImpl"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

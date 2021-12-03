@@ -1,0 +1,31 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from BankWebServiceImplService WSDL service -->
+
+  <service name="BankWebServiceImpl" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://webService"/>
+      <parameter name="wsdlServiceElement" value="BankWebServiceImplService"/>
+      <parameter name="schemaQualified" value="http://webService"/>
+      <parameter name="wsdlServicePort" value="BankWebServiceImpl"/>
+      <parameter name="className" value="webService.BankWebServiceImplSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="BankWebServiceImpl"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="performPurchace" qname="operNS:performPurchace" xmlns:operNS="http://webService" returnQName="retNS:performPurchaceReturn" xmlns:retNS="http://webService" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:IBAN" xmlns:pns="http://webService" type="tns:long" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:cvv2" xmlns:pns="http://webService" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:price" xmlns:pns="http://webService" type="tns:double" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <parameter name="allowedMethods" value="performPurchace"/>
+
+  </service>
+</deployment>

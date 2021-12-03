@@ -1,0 +1,121 @@
+<ns1:deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java" xmlns:ns1="http://xml.apache.org/axis/wsdd/">
+ <ns1:globalConfiguration>
+  <ns1:parameter name="sendMultiRefs" value="true"/>
+  <ns1:parameter name="disablePrettyXML" value="true"/>
+  <ns1:parameter name="adminPassword" value="admin"/>
+  <ns1:parameter name="attachments.Directory" value="/home/anis/eclipse-workspace/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/IfService/WEB-INF/attachments"/>
+  <ns1:parameter name="dotNetSoapEncFix" value="true"/>
+  <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
+  <ns1:parameter name="sendXMLDeclaration" value="true"/>
+  <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
+  <ns1:requestFlow>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="session"/>
+   </ns1:handler>
+   <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
+    <ns1:parameter name="scope" value="request"/>
+    <ns1:parameter name="extension" value=".jwr"/>
+   </ns1:handler>
+  </ns1:requestFlow>
+ </ns1:globalConfiguration>
+ <ns1:handler name="URLMapper" type="java:org.apache.axis.handlers.http.URLMapper"/>
+ <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
+ <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
+ <ns1:service name="AdminService" provider="java:MSG">
+  <ns1:parameter name="allowedMethods" value="AdminService"/>
+  <ns1:parameter name="enableRemoteAdmin" value="false"/>
+  <ns1:parameter name="className" value="org.apache.axis.utils.Admin"/>
+  <ns1:namespace>http://xml.apache.org/axis/wsdd/</ns1:namespace>
+ </ns1:service>
+ <ns1:service name="Version" provider="java:RPC">
+  <ns1:parameter name="allowedMethods" value="getVersion"/>
+  <ns1:parameter name="className" value="org.apache.axis.Version"/>
+ </ns1:service>
+ <ns1:service name="IfService" provider="java:RPC" style="wrapped" use="literal">
+  <ns3:operation name="convert" qname="ns1:convert" returnQName="ns1:convertReturn" returnType="ns2:ProductForUser" soapAction="" xmlns:ns1="http://service" xmlns:ns2="http://entity" xmlns:ns3="http://xml.apache.org/axis/wsdd/">
+   <ns3:parameter qname="ns1:cTo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns3:operation>
+  <ns1:operation name="getProducts" qname="ns3:getProducts" returnQName="ns3:getProductsReturn" returnType="ns4:ProductForUser" soapAction="" xmlns:ns3="http://service" xmlns:ns4="http://entity"/>
+  <ns1:operation name="login" qname="ns5:login" returnQName="ns5:loginReturn" returnType="xsd:boolean" soapAction="" xmlns:ns5="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="checkout" qname="ns6:checkout" returnQName="ns6:checkoutReturn" returnType="xsd:boolean" soapAction="" xmlns:ns6="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns6:userID" type="xsd:long"/>
+   <ns1:parameter qname="ns6:IBAN" type="xsd:long"/>
+   <ns1:parameter qname="ns6:cvv2" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="getCart" qname="ns7:getCart" returnQName="ns7:getCartReturn" returnType="ns8:ProductForUser" soapAction="" xmlns:ns7="http://service" xmlns:ns8="http://entity">
+   <ns1:parameter qname="ns7:currency" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="addToCart" qname="ns9:addToCart" returnQName="ns9:addToCartReturn" returnType="xsd:boolean" soapAction="" xmlns:ns9="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:productID" type="xsd:long"/>
+  </ns1:operation>
+  <ns1:operation name="getTotal" qname="ns10:getTotal" returnQName="ns10:getTotalReturn" returnType="xsd:double" soapAction="" xmlns:ns10="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="removeFromCart" qname="ns11:removeFromCart" returnQName="ns11:removeFromCartReturn" returnType="xsd:boolean" soapAction="" xmlns:ns11="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns11:productID" type="xsd:long"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="removeFromCart addToCart getTotal convert getCart getProducts login checkout"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="IfService"/>
+  <ns1:parameter name="className" value="service.IfService"/>
+  <ns1:parameter name="wsdlServicePort" value="IfService"/>
+  <ns1:parameter name="schemaQualified" value="http://entity,http://service"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://service"/>
+  <ns1:parameter name="wsdlServiceElement" value="IfServiceService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns12:ProductForUser" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:entity.ProductForUser" xmlns:ns12="http://entity"/>
+  <ns1:arrayMapping innerType="xsd:string" languageSpecificType="java:java.lang.String[]" qname="ns13:ArrayOf_xsd_string" xmlns:ns13="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ </ns1:service>
+ <ns1:service name="IfServiceImp" provider="java:RPC" style="wrapped" use="literal">
+  <ns1:operation name="convert" qname="ns14:convert" returnQName="ns14:convertReturn" returnType="ns15:ProductForUser" soapAction="" xmlns:ns14="http://service" xmlns:ns15="http://entity">
+   <ns1:parameter qname="ns14:cTo" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="getByCategory" qname="ns16:getByCategory" returnQName="ns16:getByCategoryReturn" returnType="ns17:ProductForUser" soapAction="" xmlns:ns16="http://service" xmlns:ns17="http://entity">
+   <ns1:parameter qname="ns16:c" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="getProducts" qname="ns18:getProducts" returnQName="ns18:getProductsReturn" returnType="ns19:ProductForUser" soapAction="" xmlns:ns18="http://service" xmlns:ns19="http://entity"/>
+  <ns1:operation name="checkout" qname="ns20:checkout" returnQName="ns20:checkoutReturn" returnType="xsd:boolean" soapAction="" xmlns:ns20="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns20:userID" type="xsd:long"/>
+   <ns1:parameter qname="ns20:IBAN" type="xsd:long"/>
+   <ns1:parameter qname="ns20:cvv2" type="xsd:int"/>
+   <ns1:parameter qname="ns20:curr" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getCart" qname="ns21:getCart" returnQName="ns21:getCartReturn" returnType="ns22:ProductForUser" soapAction="" xmlns:ns21="http://service" xmlns:ns22="http://entity">
+   <ns1:parameter qname="ns21:currency" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:operation name="addToCart" qname="ns23:addToCart" returnQName="ns23:addToCartReturn" returnType="xsd:boolean" soapAction="" xmlns:ns23="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns23:productID" type="xsd:long"/>
+  </ns1:operation>
+  <ns1:operation name="getTotal" qname="ns24:getTotal" returnQName="ns24:getTotalReturn" returnType="xsd:double" soapAction="" xmlns:ns24="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns24:curr" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="removeFromCart" qname="ns25:removeFromCart" returnQName="ns25:removeFromCartReturn" returnType="xsd:boolean" soapAction="" xmlns:ns25="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns25:productID" type="xsd:long"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="removeFromCart getByCategory addToCart getTotal convert getCart getProducts checkout"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
+  <ns1:parameter name="wsdlPortType" value="IfServiceImp"/>
+  <ns1:parameter name="className" value="service.IfServiceImp"/>
+  <ns1:parameter name="wsdlServicePort" value="IfServiceImp"/>
+  <ns1:parameter name="schemaQualified" value="http://entity,http://service"/>
+  <ns1:parameter name="wsdlTargetNamespace" value="http://service"/>
+  <ns1:parameter name="wsdlServiceElement" value="IfServiceImpService"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns26:ProductForUser" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:entity.ProductForUser" xmlns:ns26="http://entity"/>
+  <ns1:arrayMapping innerType="xsd:string" languageSpecificType="java:java.lang.String[]" qname="ns27:ArrayOf_xsd_string" xmlns:ns27="http://service" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+ </ns1:service>
+ <ns1:transport name="http">
+  <ns1:requestFlow>
+   <ns1:handler type="URLMapper"/>
+   <ns1:handler type="java:org.apache.axis.handlers.http.HTTPAuthHandler"/>
+  </ns1:requestFlow>
+  <ns1:parameter name="qs:list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs:wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+  <ns1:parameter name="qs.list" value="org.apache.axis.transport.http.QSListHandler"/>
+  <ns1:parameter name="qs.method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs:method" value="org.apache.axis.transport.http.QSMethodHandler"/>
+  <ns1:parameter name="qs.wsdl" value="org.apache.axis.transport.http.QSWSDLHandler"/>
+ </ns1:transport>
+ <ns1:transport name="local">
+  <ns1:responseFlow>
+   <ns1:handler type="LocalResponder"/>
+  </ns1:responseFlow>
+ </ns1:transport>
+</ns1:deployment>
